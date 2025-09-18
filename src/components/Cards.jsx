@@ -4,7 +4,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; 
 
-const Cards = ({ title, description, image, location, availability, rating, reviews,  user, userImage }) => {
+const Cards = ({ title, description, image, location, availability, rating, reviews,  user }) => {
   return (
     <Box
       sx={{

@@ -26,7 +26,7 @@ const Navbar = () => {
         minHeight: '60px', 
       }}>
 
-        {/* Logo and Brand Section */}
+        {/* Logo */}
         <Box sx={{
           display: 'flex', 
           alignItems: 'center',
@@ -77,7 +77,7 @@ const Navbar = () => {
           </Box>
         </Box>
 
-        {/* Right Section - User Info */}
+         
         <Box sx={{
           display: 'flex', 
           alignItems: 'center',

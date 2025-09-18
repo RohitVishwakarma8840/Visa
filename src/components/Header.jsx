@@ -30,7 +30,6 @@ const Header = () => {
         overflow: 'hidden', 
       }}>
  
-        {/* Background Image */}
         <Box sx={{ 
           height: {
             xs: '25vh',
@@ -47,7 +46,6 @@ const Header = () => {
         }}>
         </Box>
 
- {/* Floater  */}
         <Box sx={{ 
           width: {
             xs: '80vw',
@@ -109,7 +107,6 @@ const Header = () => {
             boxShadow: 2,
           }}>
 
-            {/* Location */}
             <Box sx={{
               display: 'flex', 
               flexDirection: 'column', 
@@ -157,7 +154,6 @@ const Header = () => {
               </Box>
             </Box>
 
-            {/* Date */}
             <Box sx={{
               display: 'flex', 
               flexDirection: 'column', 
@@ -205,7 +201,6 @@ const Header = () => {
               </Box>
             </Box>
 
-            {/* Game Type */}
             <Box sx={{
               display: 'flex', 
               flexDirection: 'column', 
@@ -216,7 +211,6 @@ const Header = () => {
               }
             }}>
               
-              {/* Game */}
               <Box sx={{
                 display: 'flex', 
                 flexDirection: 'row',
@@ -258,7 +252,6 @@ const Header = () => {
                 </IconButton>
               </Box>
               
-              {/* Game Selection */}
               <Box sx={{
                 display: 'flex', 
                 flexDirection: 'row',
