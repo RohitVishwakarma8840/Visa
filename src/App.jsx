@@ -8,6 +8,7 @@ import Cards from './components/Cards'
 import Data from './Data/Data'
 import Footer from './components/Footer'
 import { Box } from '@mui/material'
+import './index.css'
 
 
 function App() {

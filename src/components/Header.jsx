@@ -12,15 +12,32 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 const Header = () => {
   return (
     <>
-      <Box sx={{height:'40vh', width:'100vw', bgcolor:'pink', display:'flex', 
-        justifyContent:'center', alignItems:'center',         flexWrap: "wrap", 
+      <Box sx={{
+        // height:'40vh',
+        height: {
+          xs: '40vh', 
+          sm:'30vh',
+          md:'40vh', 
+          lg:'40vh', 
+        },
+ width:'100vw', bgcolor:'pink', display:'flex', 
+      flexDirection : {
+        xs:'column', 
+        sm:'column',
+        md:'column', lg:'row',
+      },
+
+        justifyContent:'center', alignItems:'center', flexWrap: "wrap", 
 
         bgcolor:'#f6f6f62f',
         // bgcolor:'#000',
         
          fontSize:'30px', 
         fontWeight:'bold',
-        position:'relative'
+        position:'relative', 
+        
+
+
         }}>
  
       <Box sx={{ 
@@ -36,7 +53,8 @@ const Header = () => {
 
       <Box 
       sx={{ 
-          width:'70vw', bgcolor:'#fff', height:'14vh', position:'absolute',
+          width:'70vw', bgcolor:'#fff', height:'14vh',
+           position:'absolute',
           bottom:15,
           borderRadius:'30%'
         //   bottom:'0px',right:0
@@ -46,7 +64,13 @@ const Header = () => {
       <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)", // 4 columns
+        // gridTemplateColumns: "repeat(3, 1fr)", // 4 columns
+          gridTemplateColumns: {
+          xs: 'repeat(1, 1fr)',  // 1 column for extra small screens (mobile)
+          sm: 'repeat(2, 1fr)',  // 2 columns for small screens (tablet)
+          md: 'repeat(3, 1fr)', 
+          lg: 'repeat(3,1fr)', // 3 columns for medium screens (desktop)
+        },
         gap: 2,
         alignItems: "center",
         // justifyContent:'center',
@@ -91,23 +115,37 @@ const Header = () => {
         // alignItems:'center'
          }}>
 
-          {/* <Box sx={{display:'flex',flexDirection:'column',gap:1}}> */}
-        <Typography variant="subtitle2" fontWeight={600} marginTop={1}>
+<Box sx={{display:'flex', flexDirection:'row',alignItems:'center', gap:20}}>
+        <Typography variant="subtitle2" fontWeight={600} marginTop={0}>
           Game Type
         </Typography>
+           <IconButton
+          sx={{
+            bgcolor: "green",
+            width:50,
+            height:50,
+            borderRadius:1,
+            display:'flex',
+            marginTop:0,
+            justifyContent:'center',color: "#fff",
+            "&:hover": { bgcolor: "darkgreen" },
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
+
+        </Box>
             <Box sx={{display:'flex', flexDirection:'row',alignItems:'center',gap:10}}>
          <Typography variant="subtitle2" fontWeight={600} color='#807474ff'>
           Choose Game
         </Typography>
 
-        {/* </Box> */}
-        {/* <ArrowDropDownIcon sx={{color:'#807474ff'}}/> */}
          <Box display="flex" justifyContent="center" alignItems="center" sx={{paddingLeft:4}}>
    <ArrowDropDownIcon sx={{color:'#807474ff'}}/>
 
 
 
-        <IconButton
+        {/* <IconButton
           sx={{
             bgcolor: "green",
             width:50,
@@ -119,29 +157,15 @@ const Header = () => {
           }}
         >
           <SearchIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
+
+
         </Box>
       
       </Box>
 
-      {/* Search button */}
-      {/* <Box display="flex" justifyContent="center" alignItems="center" sx={{paddingLeft:4}}>
-   <ArrowDropDownIcon sx={{color:'#807474ff'}}/>
-
-        <IconButton
-          sx={{
-            bgcolor: "green",
-            width:50,
-            height:50,
-            borderRadius:1,
-                     color: "#fff",
-            "&:hover": { bgcolor: "darkgreen" },
-          }}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Box> */}
+ 
     </Box>
 
       </Box>

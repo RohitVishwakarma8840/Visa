@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Avatar, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; // for Book Now button
 
-const Cards = ({ title, description, image, location, availability, rating, reviews, price, user }) => {
+const Cards = ({ title, description, image, location, availability, rating, reviews, price, user, userImage }) => {
   return (
     <Box
       sx={{
@@ -63,10 +64,30 @@ const Cards = ({ title, description, image, location, availability, rating, revi
           <b>Rating:</b> {rating} ⭐ ({reviews} Reviews)
         </Typography>
 
-        {/* Coach */}
-        <Typography variant="body2">
-          <b>Coach:</b> {user}
-        </Typography>
+        {/* Coach + Book Now Row */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 2,
+          }}
+        >
+          {/* Coach with Avatar */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Avatar src="pro_pic.jpg" alt={user} sx={{ width: 38, height: 38 }} />
+            <Typography variant="body2">{user}</Typography>
+          </Box>
+
+          {/* Book Now Button */}
+          <Button
+            variant="text"
+            startIcon={<CalendarMonthIcon />}
+            sx={{ textTransform: "none", fontWeight: 500 }}
+          >
+            Book Now
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

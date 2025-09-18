@@ -90,11 +90,18 @@ const Data = () => {
     <Box
       sx={{
         bgcolor: "#F6F6F",
+        bgcolor:'#000',
         display: "flex",
         gap: 3,
         justifyContent: "center",
         flexWrap: "wrap", 
         p: 4,
+        height:'auto',
+        marginTop:{
+          sm:'0',
+          md:'20px',
+          lg:'30px',
+        }
       }}
     >
       {data.map((academy,i) => (
