@@ -8,19 +8,14 @@ const Footer = () => {
       sx={{
         bgcolor: "#0a1f44",
         color: "#fff",
-        width:'100%', 
-        overflowX:'hidden',
-        
+        width: '100%',
+        overflowX: 'hidden',
         mt: 5,
         pt: 6,
         pb: 3,
-        px: { xs: 3,
-             sm: 6, 
-            md: 2 },
+        px: { xs: 2, sm: 4, md: 2 },
       }}
     >
-
-
       <Box textAlign="center" mb={4}>
         <Typography variant="h6" fontWeight="bold">
           We Welcome Your Passion and Expertise
@@ -36,59 +31,59 @@ const Footer = () => {
         </Button>
       </Box>
 
-      <Grid container spacing={12} justifyContent="center">
+      <Grid container spacing={{ xs: 4, md: 12, sm: 2 }} justifyContent="center">
         {/* Contact Us */}
         <Grid item xs={12} sm={6} md={2}>
           <Typography fontWeight="bold" mb={2}>
             Contact Us
           </Typography>
           <Box>
-          <Typography variant="body2">Toll free customer care</Typography>
-          <Typography variant="body2">+017 123 456 78</Typography>
-          <Typography variant="body2" mt={1}>
-            Need Live Support
-          </Typography>
-          <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
-            vsports@example.com
-          </Typography>
-          <Box mt={1}>
-            <IconButton sx={{ color: "#fff" }}>
-              <Facebook />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <Twitter />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <Instagram />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <LinkedIn />
-            </IconButton>
-          </Box>
+            <Typography variant="body2">Toll free customer care</Typography>
+            <Typography variant="body2">+017 123 456 78</Typography>
+            <Typography variant="body2" mt={1}>
+              Need Live Support
+            </Typography>
+            <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+              vsports@example.com
+            </Typography>
+            <Box mt={1} sx={{ textAlign: 'left' }}>
+              <IconButton sx={{ color: "#fff" }}>
+                <Facebook />
+              </IconButton>
+              <IconButton sx={{ color: "#fff" }}>
+                <Twitter />
+              </IconButton>
+              <IconButton sx={{ color: "#fff" }}>
+                <Instagram />
+              </IconButton>
+              <IconButton sx={{ color: "#fff" }}>
+                <LinkedIn />
+              </IconButton>
+            </Box>
           </Box>
         </Grid>
 
+        {/* Quick Links */}
         <Grid item xs={12} sm={6} md={2}>
           <Typography fontWeight="bold" mb={2}>
             Quick Links
           </Typography>
-                    <Box sx={{display:'flex', flexDirection:'column', gap:1}}>
-
-          <Link href="#" color="inherit" underline="hover" display="block">
-            About us
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Services
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Events
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Blogs
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Contact us
-          </Link>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              About us
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Services
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Events
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Blogs
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Contact us
+            </Link>
           </Box>
         </Grid>
 
@@ -97,46 +92,47 @@ const Footer = () => {
           <Typography fontWeight="bold" mb={2}>
             Support
           </Typography>
-          <Box sx={{display:'flex', flexDirection:'column', gap:1}}>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Contact Us
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            FAQ
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Privacy Policy
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Terms & Conditions
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Pricing
-          </Link>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Contact Us
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              FAQ
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Privacy Policy
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Terms & Conditions
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Pricing
+            </Link>
           </Box>
         </Grid>
 
+        {/* Other Links */}
         <Grid item xs={12} sm={6} md={2}>
           <Typography fontWeight="bold" mb={2}>
             Other Links
           </Typography>
-          <Box sx={{display:'flex', flexDirection:'column', gap:1}}>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Coaches
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Sports Venue
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Join As Coach
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            Add Venue
-          </Link>
-          <Link href="#" color="inherit" underline="hover" display="block">
-            My Account
-          </Link>
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Coaches
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Sports Venue
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Join As Coach
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              Add Venue
+            </Link>
+            <Link href="#" color="inherit" underline="hover" display="block">
+              My Account
+            </Link>
+          </Box>
         </Grid>
 
         {/* Location */}
@@ -147,24 +143,24 @@ const Footer = () => {
           <Typography variant="body2">Chennai</Typography>
         </Grid>
 
-        {/* Download Sect*/}
+        {/* Download Sect */}
         <Grid item xs={12} sm={6} md={2}>
           <Typography fontWeight="bold" mb={2}>
             Download
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Box
-            component="img"
-            src="/Apple.png"
-            alt="App Store"
-            sx={{ width: 140, mb: 1, cursor: "pointer" }}
-          />
-          <Box
-            component="img"
-            src="google_play.png"
-            alt="Google Play"
-            sx={{ width: 140, cursor: "pointer" }}
-          />
+            <Box
+              component="img"
+              src="/Apple.png"
+              alt="App Store"
+              sx={{ width: 140, mb: 1, cursor: "pointer" }}
+            />
+            <Box
+              component="img"
+              src="google_play.png"
+              alt="Google Play"
+              sx={{ width: 140, cursor: "pointer" }}
+            />
           </Box>
         </Grid>
       </Grid>

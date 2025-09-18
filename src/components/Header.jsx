@@ -47,10 +47,10 @@ const Header = () => {
         }}>
         </Box>
 
-        {/* Search Card */}
+ {/* Floater  */}
         <Box sx={{ 
           width: {
-            xs: '95vw',
+            xs: '80vw',
             sm: '90vw',
             md: '80vw',
             lg: '70vw',
@@ -96,11 +96,16 @@ const Header = () => {
               sm: 2,
               md: 2,
             },
-            borderRadius: {
-              xs: '15px',
-              sm: '20px',
-              md: '30px',
-            },
+            // borderRadius: {
+            //   xs: '15px',
+            //   sm: '20px',
+            //   md: '30px',
+            // },
+              borderRadius: {
+            xs: '15px',
+            sm: '15px',
+            md: '15px',
+          },
             boxShadow: 2,
           }}>
 
@@ -211,7 +216,7 @@ const Header = () => {
               }
             }}>
               
-              {/* Game Type Header and Search Button Row */}
+              {/* Game */}
               <Box sx={{
                 display: 'flex', 
                 flexDirection: 'row',
@@ -231,14 +236,14 @@ const Header = () => {
                 <IconButton sx={{
                   bgcolor: "green",
                   width: {
-                    xs: 40,
-                    sm: 45,
-                    md: 50,
+                    xs: 25,
+                    sm: 30,
+                    md: 30,
                   },
                   height: {
-                    xs: 40,
-                    sm: 45,
-                    md: 50,
+                    xs: 25,
+                    sm: 30,
+                    md: 30,
                   },
                   borderRadius: 1,
                   color: "#fff",
@@ -253,7 +258,7 @@ const Header = () => {
                 </IconButton>
               </Box>
               
-              {/* Game Selection Row */}
+              {/* Game Selection */}
               <Box sx={{
                 display: 'flex', 
                 flexDirection: 'row',

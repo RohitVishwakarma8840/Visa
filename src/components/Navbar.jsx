@@ -23,15 +23,15 @@ const Navbar = () => {
         px: { xs: 2, sm: 4, md: 6 },
         overflow: 'hidden',
         flexDirection: 'row',
-        minHeight: '60px', // Ensure minimum height for very small screens
+        minHeight: '60px', 
       }}>
 
         {/* Logo and Brand Section */}
         <Box sx={{
           display: 'flex', 
           alignItems: 'center',
-          flex: { xs: 1, sm: 'none' }, // Take available space on mobile
-          minWidth: 0, // Allow shrinking
+          flex: { xs: 1, sm: 'none' }, 
+          minWidth: 0, 
         }}>
           <Box
             component="img"
@@ -41,13 +41,13 @@ const Navbar = () => {
               width: { xs: '40px', sm: '50px', md: '60px' },
               height: { xs: '40px', sm: '50px', md: '60px' },
               borderRadius: '50%',
-              flexShrink: 0, // Prevent image from shrinking
+              flexShrink: 0, 
             }}
           />
 
           <Box sx={{
             marginLeft: { xs: '8px', sm: '12px' },
-            minWidth: 0, // Allow text to shrink if needed
+            minWidth: 0, 
           }}>
             <Typography sx={{
               color: 'green', 
@@ -70,7 +70,7 @@ const Navbar = () => {
                 md: '14px'
               },
               lineHeight: 1.2,
-              whiteSpace: { xs: 'nowrap', sm: 'normal' }, // Prevent wrapping on mobile
+              whiteSpace: { xs: 'nowrap', sm: 'normal' }, 
             }}>
               V Sport Academy
             </Typography>
@@ -82,7 +82,7 @@ const Navbar = () => {
           display: 'flex', 
           alignItems: 'center',
           gap: { xs: '6px', sm: '10px', md: '12px' },
-          flexShrink: 0, // Prevent shrinking
+          flexShrink: 0, 
         }}>
           <Typography 
             variant="body1" 
@@ -94,25 +94,24 @@ const Navbar = () => {
                 sm: '12px', 
                 md: '14px'
               },
-              display: { xs: 'none', sm: 'block' }, // Hide on very small screens
+              display: { xs: 'none', sm: 'block' }, 
               whiteSpace: 'nowrap',
             }}
           >
             My Booking
           </Typography>
 
-          {/* Mobile version - shorter text */}
           <Typography 
             variant="body1" 
             sx={{
               color: 'black',
               fontWeight: '550',
               fontSize: '11px',
-              display: { xs: 'block', sm: 'none' }, // Show only on mobile
+              display: { xs: 'block', sm: 'none' }, 
               whiteSpace: 'nowrap',
             }}
           >
-           My Booking
+          Booking
           </Typography>
 
           <Box

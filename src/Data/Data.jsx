@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Cards from "../components/Cards";
-// 
+
 const data = [
   {
     id: 1,
@@ -90,13 +90,15 @@ const Data = () => {
     <Box
       sx={{
         bgcolor: "#F6F6F",
-        bgcolor:'#000',
+        bgcolor:'#F2F2F2',
+        // bgcolor:'#000',
         display: "flex",
         gap: 3,
         justifyContent: "center",
         flexWrap: "wrap", 
         p: 4,
         height:'auto',
+        overflow:'hidden',
         marginTop:{
           sm:'0',
           md:'20px',

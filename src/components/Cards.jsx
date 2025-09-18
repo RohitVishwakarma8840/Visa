@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Typography, Avatar, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; // for Book Now button
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; 
 
-const Cards = ({ title, description, image, location, availability, rating, reviews, price, user, userImage }) => {
+const Cards = ({ title, description, image, location, availability, rating, reviews,  user, userImage }) => {
   return (
     <Box
       sx={{
@@ -12,17 +12,17 @@ const Cards = ({ title, description, image, location, availability, rating, revi
         bgcolor: "#fff",
         borderRadius: 2,
         boxShadow: 2,
-        overflow: "hidden",
+        overflowX: "hidden",
+        
       }}
     >
-      {/* Image */}
       <img
         src={image}
         alt={title}
         style={{ width: "100%", height: 160, objectFit: "cover" }}
       />
 
-      <Box p={2}>
+      <Box p={2} sx={{overflow:'hidden'}}>
         {/* Title */}
         <Typography
           variant="h6"
@@ -32,12 +32,10 @@ const Cards = ({ title, description, image, location, availability, rating, revi
           {title}
         </Typography>
 
-        {/* Description */}
         <Typography variant="body2" sx={{ mb: 1 }}>
           {description}
         </Typography>
 
-        {/* Location */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <LocationOnIcon fontSize="small" color="action" />
           <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -45,7 +43,6 @@ const Cards = ({ title, description, image, location, availability, rating, revi
           </Typography>
         </Box>
 
-        {/* Availability */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <EventAvailableIcon fontSize="small" color="action" />
           <Typography variant="body2">
@@ -64,7 +61,6 @@ const Cards = ({ title, description, image, location, availability, rating, revi
           <b>Rating:</b> {rating} ⭐ ({reviews} Reviews)
         </Typography>
 
-        {/* Coach + Book Now Row */}
         <Box
           sx={{
             display: "flex",
@@ -73,13 +69,11 @@ const Cards = ({ title, description, image, location, availability, rating, revi
             mt: 2,
           }}
         >
-          {/* Coach with Avatar */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Avatar src="pro_pic.jpg" alt={user} sx={{ width: 38, height: 38 }} />
             <Typography variant="body2">{user}</Typography>
           </Box>
 
-          {/* Book Now Button */}
           <Button
             variant="text"
             startIcon={<CalendarMonthIcon />}
