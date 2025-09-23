@@ -284,7 +284,7 @@ const Login = () => {
              
              
              } */}
-            Sign In
+            Log In
           </Button>
 
           {/* <Typography sx={styles.forgetPassword}>

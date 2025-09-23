@@ -11,6 +11,7 @@ import { Box } from '@mui/material'
 import './index.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/auth/Login'
+import Booking from './components/auth/Booking/Booking'
 
 
 
@@ -43,6 +44,7 @@ function App() {
         />
 
       <Route path='/login' element={<Login/>}/>
+      <Route path='/booking' element={<Booking/>}/>
 
        </Routes>
     </Router>
