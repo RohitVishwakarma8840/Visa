@@ -3,8 +3,10 @@ import { Box, Typography, Avatar, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; 
+import { useNavigate } from "react-router-dom";
 
 const Cards = ({ title, description, image, location, availability, rating, reviews,  user }) => {
+ const navigate  = useNavigate();
   return (
     <Box
       sx={{
@@ -78,6 +80,7 @@ const Cards = ({ title, description, image, location, availability, rating, revi
             variant="text"
             startIcon={<CalendarMonthIcon />}
             sx={{ textTransform: "none", fontWeight: 500 }}
+            onClick={ ()=> navigate('/booking')}
           >
             Book Now
           </Button>
