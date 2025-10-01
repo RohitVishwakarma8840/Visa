@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -14,10 +14,27 @@ import {
   Fade,
   Zoom,
 } from "@mui/material";
+import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getTurfById } from "../../../store/slices/turfSlice";
 
 const Booking = () => {
   const theme = useTheme();
+  const {turfId} = useParams();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const dispatch = useDispatch();
+
+
+
+  
+  useEffect(()=>{
+    dispatch(getTurfById(turfId))
+  },[turfId])
+  
+  const {turfs,loading,error} = useSelector((state)=>state.turf);
+  console.log(turfs.turf);  // Check if the turf data is being populated correctly
+  console.log(loading, error);
   
   const games = [
     { id: 1, name: "Football", type: "Outdoor", icon: "⚽", color: "#4CAF50" },
@@ -28,11 +45,17 @@ const Booking = () => {
     { id: 6, name: "Basketball", type: "Outdoor", icon: "🏀", color: "#FF5722" },
   ];
 
-  const timeSlots = [
-    "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-    "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
-    "06:00 PM", "07:00 PM", "08:00 PM"
-  ];
+  
+  const timeSlots = turfs.turf?.availableSlots.map(slot => slot.time) || []; ;
+  console.log(turfs.turf?.availableSlots);
+  console.log(timeSlots,'ok i am there ')
+  
+  // const timeSlots = [
+  //   "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+  //   "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
+  //   "06:00 PM", "07:00 PM", "08:00 PM"
+  // ];'
+
 
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
@@ -70,19 +93,28 @@ const Booking = () => {
     return today.toISOString().split('T')[0];
   };
 
+ 
   return (
+    <>
     <Box
       sx={{
         minHeight: '100vh',
-        // background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        background:"#0B7690",
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         py: 4,
         px: 2,
+        overflowX:'clip',
       }}
     >
-      <Container maxWidth="lg">
+
+     
+
+
+
+      <Container maxWidth="lg" >
         {/* Header */}
-        <Box textAlign="center" mb={6}>
+        <Box textAlign="center" 
+         
+        mb={6}>
           <Typography 
             variant={isMobile ? "h3" : "h2"} 
             component="h1" 
@@ -107,6 +139,63 @@ const Booking = () => {
           </Typography>
         </Box>
 
+
+
+            {turfs?.turf && (
+          <Card
+            elevation={6}
+            sx={{
+              marginBottom: '30px',
+              borderRadius: '16px',
+              overflow: 'hidden',
+            }}
+          >
+            <CardContent sx={{ padding: '30px' }}>
+              <Grid container spacing={3}>
+                {turfs.turf.image && (
+                  <Grid item xs={12} md={5}>
+                    <Box
+                      component="img"
+                      src={turfs.turf.image}
+                      alt={turfs.turf.name}
+                      sx={{
+                        width: '100%',
+                        height: '280px',
+                        objectFit: 'cover',
+                        borderRadius: '12px',
+                      }}
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={12} md={turfs.turf.image ? 7 : 12}>
+                  <Typography variant="h3" sx={{ fontWeight: 700, marginBottom: '15px', color: '#333' }}>
+                    {turfs.turf.name}
+                  </Typography>
+                  <Chip
+                    label={`₹${turfs.turf.price}/hour`}
+                    sx={{
+                      backgroundColor: '#4CAF50',
+                      color: 'white',
+                      fontWeight: 600,
+                      fontSize: '16px',
+                      padding: '20px 12px',
+                      marginBottom: '15px',
+                    }}
+                  />
+                  <Typography variant="body1" sx={{ color: '#666', marginBottom: '15px', lineHeight: 1.6 }}>
+                    {turfs.turf.description}
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: '#555', display: 'flex', alignItems: 'center' }}>
+                    <span style={{ marginRight: '8px' }}>📍</span>
+                    {turfs.turf.location}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+
         <Grid container spacing={4}>
           {/* Left Column - Booking Form */}
           <Grid item xs={12} lg={8}>
@@ -121,10 +210,10 @@ const Booking = () => {
               }}
             >
               <CardContent sx={{ p: 4 }}>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3 }}>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3, textAlign:'center' }}>
                   🎮 Select Your Game
                 </Typography>
-                <Grid container spacing={2}>
+                <Grid container spacing={8} sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                   {games.map((game) => (
                     <Grid item xs={12} sm={6} md={4} key={game.id}>
                       <Paper
@@ -184,7 +273,7 @@ const Booking = () => {
               }}
             >
               <CardContent sx={{ p: 4 }}>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3 }}>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3,textAlign:'center' }}>
                   📅 Select Date
                 </Typography>
                 <input
@@ -220,8 +309,8 @@ const Booking = () => {
               }}
             >
               <CardContent sx={{ p: 4 }}>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3 }}>
-                  ⏰ Select Time
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 3, textAlign:'center' }}>
+                  ⏰ Select Time from Available Slots
                 </Typography>
                 <Grid container spacing={2}>
                   {timeSlots.map((time) => (
@@ -332,7 +421,7 @@ const Booking = () => {
             </Card>
 
             {/* Confirmation */}
-            {/* {bookingConfirmed && (
+            {bookingConfirmed && (
               <Zoom in={bookingConfirmed}>
                 <Card 
                   elevation={12}
@@ -373,10 +462,7 @@ const Booking = () => {
                   </CardContent>
                 </Card>
               </Zoom>
-            )} */}
-
-
-
+            )}
 
             {/* Features */}
             <Card 
@@ -386,7 +472,7 @@ const Booking = () => {
                 borderRadius: 3,
                 background: 'rgba(255,255,255,0.95)',
                 backdropFilter: 'blur(10px)',
-                 width: '100vw',padding: '0px'
+                 width: '84vw',padding: '0px'
               }}
             >
               <CardContent sx={{ p: 4,   width:'100vw'}}>
@@ -407,10 +493,13 @@ const Booking = () => {
                 </Box>
               </CardContent>
             </Card>
+
+
           </Grid>
         </Grid>
       </Container>
     </Box>
+    </>
   );
 };
 

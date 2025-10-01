@@ -5,8 +5,19 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; 
 import { useNavigate } from "react-router-dom";
 
-const Cards = ({ title, description, image, location, availability, rating, reviews,  user }) => {
+const Cards = ({ title, name, description, image, location, availableSlots, rating, reviews,price,  user,turfId }) => {
+  // console.log('first', first)
  const navigate  = useNavigate();
+
+ const handleBookNow = () => {
+  console.log('Turf ID:', turfId);
+  alert( `Turf is ${turfId}`);
+  // navigate(`/turf/${turfId}`);
+  navigate(`/booking/${turfId}`);
+
+ }
+
+
   return (
     <Box
       sx={{
@@ -34,6 +45,15 @@ const Cards = ({ title, description, image, location, availability, rating, revi
           {title}
         </Typography>
 
+
+  <Typography
+          variant="h6"
+          align="center"
+          sx={{ fontWeight: 600, mb: 1 }}
+        >
+          {name}
+        </Typography>
+
         <Typography variant="body2" sx={{ mb: 1 }}>
           {description}
         </Typography>
@@ -48,12 +68,20 @@ const Cards = ({ title, description, image, location, availability, rating, revi
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <EventAvailableIcon fontSize="small" color="action" />
           <Typography variant="body2">
-            Next Availability:{" "}
+            {/* Next Availability:{" "} */}
             <Typography
               component="span"
               sx={{ color: "green", fontWeight: 600 }}
             >
-              {availability}
+
+ Next Availability:{" "} 
+
+              {/* {availableSlots[0].time}  */}
+              {/* {availableSlots[0].time} */}
+               {/* {JSON.stringify(availableSlots.date)} */}
+               {availableSlots?.length > 0 ? (
+  <Typography>{availableSlots[0].time}</Typography>
+): 'No slots'}
             </Typography>
           </Typography>
         </Box>
@@ -61,6 +89,10 @@ const Cards = ({ title, description, image, location, availability, rating, revi
         {/* Rating */}
         <Typography variant="body2" sx={{ mb: 1 }}>
           <b>Rating:</b> {rating} ⭐ ({reviews} Reviews)
+        </Typography>
+
+    <Typography variant="body2" sx={{ mb: 1 }}>
+          <b>price:</b> {price} ₨
         </Typography>
 
         <Box
@@ -80,7 +112,8 @@ const Cards = ({ title, description, image, location, availability, rating, revi
             variant="text"
             startIcon={<CalendarMonthIcon />}
             sx={{ textTransform: "none", fontWeight: 500 }}
-            onClick={ ()=> navigate('/booking')}
+            // onClick={ ()=> navigate('/booking')}
+            onClick={handleBookNow}
           >
             Book Now
           </Button>
