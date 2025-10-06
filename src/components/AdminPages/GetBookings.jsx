@@ -23,12 +23,16 @@ import {
   Email,
   ErrorOutline,
 } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { getAllBooking } from '../../store/slices/bookingSlice';
+import { updateBookingStatus } from '../../store/slices/bookingSlice';
 
 function GetBookings() {
   const dispatch = useDispatch();
   const { bookings, loading, error } = useSelector((state) => state.booking);
   const allBook = bookings?.bookings || [];
+
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getAllBooking());
@@ -49,12 +53,88 @@ function GetBookings() {
       case 'pending':
         return 'warning';
       case 'confirmed':
+      case 'approved':
         return 'success';
       case 'cancelled':
+      case 'rejected':
         return 'error';
       default:
         return 'default';
     }
+  };
+
+  // FIXED: Pass turfId and slotId as parameters
+  const handleUpdateStatus = (turfId, slotId, bookingStatus) => {
+    console.log('🔍 handleUpdateStatus called');
+    console.log('turfId:', turfId);
+    console.log('slotId:', slotId);
+    console.log('bookingStatus:', bookingStatus);
+    
+    dispatch(updateBookingStatus({ turfId, slotId, bookingStatus }))
+      .unwrap()
+      .then((updatedSlot) => {
+        console.log("Status updated successfully:", updatedSlot);
+        dispatch(getAllBooking()); // Refresh bookings after update
+      })
+      .catch((err) => {
+        console.error("Error updating booking status:", err);
+      });
+  };
+
+  // FIXED: Accept turfId, slotId, and status as parameters
+  const renderButtons = (turfId, slotId, status) => {
+    if (user?.userType !== 'manager') return null;
+
+    if (status === 'pending') {
+      return (
+        <>
+          <Button 
+            variant="contained"
+            color="success" 
+            sx={{ bgcolor: '#4caf50', '&:hover': { bgcolor: '#45a049' } }} 
+            onClick={() => handleUpdateStatus(turfId, slotId, 'approved')}
+          >
+            Approve
+          </Button>
+          <Button 
+            variant="contained"
+            color="error" 
+            sx={{ bgcolor: '#f44336', '&:hover': { bgcolor: '#da190b' } }} 
+            onClick={() => handleUpdateStatus(turfId, slotId, 'rejected')}
+          >
+            Reject
+          </Button>
+        </>
+      );
+    }
+
+    if (status === 'approved') {
+      return (
+        <Button 
+          variant="contained"
+          color="error" 
+          sx={{ bgcolor: '#f44336', '&:hover': { bgcolor: '#da190b' } }} 
+          onClick={() => handleUpdateStatus(turfId, slotId, 'rejected')}
+        >
+          Reject
+        </Button>
+      );
+    }
+
+    if (status === 'rejected') {
+      return (
+        <Button 
+          variant="contained"
+          color="success" 
+          sx={{ bgcolor: '#4caf50', '&:hover': { bgcolor: '#45a049' } }} 
+          onClick={() => handleUpdateStatus(turfId, slotId, 'approved')}
+        >
+          Approve
+        </Button>
+      );
+    }
+
+    return null;
   };
 
   if (loading) {
@@ -108,7 +188,6 @@ function GetBookings() {
       }}
     >
       <Container maxWidth="xl">
-        {/* Header */}
         <Box sx={{ mb: 6, textAlign: 'center' }}>
           <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
             All Turf Bookings
@@ -118,16 +197,8 @@ function GetBookings() {
           </Typography>
         </Box>
 
-        {/* Bookings Grid */}
         {allBook.length === 0 ? (
-          <Paper
-            elevation={0}
-            sx={{
-              textAlign: 'center',
-              py: 8,
-              borderRadius: 2,
-            }}
-          >
+          <Paper elevation={0} sx={{ textAlign: 'center', py: 8, borderRadius: 2 }}>
             <ErrorOutline sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
             <Typography variant="h6" color="text.secondary">
               No bookings found
@@ -143,12 +214,9 @@ function GetBookings() {
                   borderRadius: 3,
                   overflow: 'hidden',
                   transition: 'all 0.3s',
-                  '&:hover': {
-                    boxShadow: 6,
-                  },
+                  '&:hover': { boxShadow: 6 },
                 }}
               >
-                {/* Turf Header */}
                 <Box
                   sx={{
                     background: 'linear-gradient(135deg, #5e35b1 0%, #7e57c2 100%)',
@@ -166,7 +234,7 @@ function GetBookings() {
                     }}
                   >
                     <Box>
-                      <Typography variant="h5" component="h2" fontWeight="bold" gutterBottom>
+                      <Typography variant="h5" component="h2" fontWeight="bold" gutterBottom sx={{ textAlign: 'center' }}>
                         {turf.name}
                       </Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -186,7 +254,6 @@ function GetBookings() {
                   </Box>
                 </Box>
 
-                {/* Bookings List */}
                 <CardContent sx={{ p: 4 }}>
                   <Grid container spacing={3}>
                     {turf.bookings.map((booking, bookingIndex) => (
@@ -207,7 +274,6 @@ function GetBookings() {
                             },
                           }}
                         >
-                          {/* Status Badge */}
                           <Box sx={{ mb: 2 }}>
                             <Chip
                               label={booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
@@ -217,17 +283,9 @@ function GetBookings() {
                             />
                           </Box>
 
-                          {/* Date & Time */}
                           <Box sx={{ mb: 3 }}>
                             <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
-                              <CalendarMonth
-                                sx={{
-                                  color: 'primary.main',
-                                  mr: 1.5,
-                                  mt: 0.5,
-                                  fontSize: 20,
-                                }}
-                              />
+                              <CalendarMonth sx={{ color: 'primary.main', mr: 1.5, mt: 0.5, fontSize: 20 }} />
                               <Box>
                                 <Typography variant="caption" color="text.secondary" fontWeight={600}>
                                   Date
@@ -239,14 +297,7 @@ function GetBookings() {
                             </Box>
 
                             <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                              <AccessTime
-                                sx={{
-                                  color: 'primary.main',
-                                  mr: 1.5,
-                                  mt: 0.5,
-                                  fontSize: 20,
-                                }}
-                              />
+                              <AccessTime sx={{ color: 'primary.main', mr: 1.5, mt: 0.5, fontSize: 20 }} />
                               <Box>
                                 <Typography variant="caption" color="text.secondary" fontWeight={600}>
                                   Time
@@ -260,14 +311,8 @@ function GetBookings() {
 
                           <Divider sx={{ my: 2 }} />
 
-                          {/* Booked By */}
                           <Box>
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                              fontWeight={600}
-                              sx={{ mb: 1.5, display: 'block' }}
-                            >
+                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ mb: 1.5, display: 'block' }}>
                               Booked By
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
@@ -284,6 +329,11 @@ function GetBookings() {
                                 {booking.bookedBy.email}
                               </Typography>
                             </Box>
+                          </Box>
+
+                          {/* FIXED: Pass the correct turfId, slotId, and status */}
+                          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                            {renderButtons(turf.turfId, booking.slotId, booking.status)}
                           </Box>
                         </Paper>
                       </Grid>

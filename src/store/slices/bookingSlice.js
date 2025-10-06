@@ -59,6 +59,36 @@ async(_, { rejectWithValue }) => {
 }
 )
 
+export const updateBookingStatus = createAsyncThunk(
+  'booking/updateStatus',
+  async ({ turfId, slotId, bookingStatus }, { rejectWithValue,getState }) => {
+    try {
+       const state = getState();
+      const userType = state.auth?.user?.userType;
+
+      if (userType !== "manager") {
+        return rejectWithValue("Only managers can create turfs");
+      }
+      const token = localStorage.getItem("token");
+      const response = await axiosInstance.patch(
+        `turfs/${turfId}/slots/${slotId}/status`,
+        { bookingStatus },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      return response.slot;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.msg || 'Something went wrong');
+    }
+  }
+);
+
+
+
+
 
 const bookingSlice = createSlice({
   name: 'booking',
@@ -95,6 +125,38 @@ const bookingSlice = createSlice({
         state.loading = false;
         state.bookings= action.payload;
       })
+      
+      // Update booking status
+      .addCase(updateBookingStatus.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(updateBookingStatus.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        
+        const updatedSlot = action.payload;
+        
+        // FIXED: Update the slot in the bookings array
+        if (state.bookings?.bookings) {
+          state.bookings.bookings = state.bookings.bookings.map((turf) => ({
+            ...turf,
+            bookings: turf.bookings.map((booking) =>
+              booking.slotId === updatedSlot._id || booking.slotId === updatedSlot.slotId
+                ? { 
+                    ...booking, 
+                    status: updatedSlot.bookingStatus,
+                    bookingStatus: updatedSlot.bookingStatus 
+                  }
+                : booking
+            ),
+          }));
+        }
+      })
+      .addCase(updateBookingStatus.rejected, (state, action) => {
+        state.updateLoading = false;
+        state.error = action.payload;
+      });
+   
   },
 });
 
