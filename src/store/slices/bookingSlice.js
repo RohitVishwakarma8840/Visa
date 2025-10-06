@@ -20,7 +20,13 @@ export const BookTurf = createAsyncThunk(
   'booking/bookTurf', 
   async ({ turfId, bookingData }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`turfs/${turfId}/book`, bookingData); 
+
+      const token = localStorage.getItem("token");
+      const response = await axiosInstance.post(`turfs/${turfId}/book`, bookingData,{
+        headers: {
+          "x-auth-token": token,
+        },
+      }); 
       console.log("booking successfull ", response);
 
       return response; 
