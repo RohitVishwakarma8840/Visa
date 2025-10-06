@@ -36,6 +36,28 @@ export const BookTurf = createAsyncThunk(
   }
 );
 
+export const getAllBooking = createAsyncThunk(
+  'users/AllBooking',
+async(_, { rejectWithValue }) => {
+  try{
+    const token = localStorage.getItem("token");
+    const response = await axiosInstance.get(`turfs/users/AllBooking`,{
+      headers:{
+        "x-auth-token" : token,
+      },
+    }
+    );
+    
+    console.log(response, "Response is coming ");
+    return response;
+
+  }
+  catch(err){
+    console.log(err);
+    return rejectWithValue(err.response?.data.msg || "failed to get All user booking ")
+  }
+}
+)
 
 
 const bookingSlice = createSlice({
@@ -60,7 +82,19 @@ const bookingSlice = createSlice({
       .addCase(fetchUserBookings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getAllBooking.pending,(state,action)=> {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllBooking.rejected,(state,action)=>{
+        state.loading= false;
+        state.error = action.payload;
+      })
+      .addCase(getAllBooking.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.bookings= action.payload;
+      })
   },
 });
 

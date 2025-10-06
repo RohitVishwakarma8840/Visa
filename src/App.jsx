@@ -10,6 +10,7 @@ import Booking from './components/auth/Booking/Booking';
 import './index.css';
 import UserBooking from './components/UserBooking';
 import CreateTurf from './components/CreateTurf';
+import GetBookings from './components/AdminPages/GetBookings';
 
 function App() {
   const { isAuthenticated,isManager } = useSelector((state) => state.auth);
@@ -38,11 +39,16 @@ function App() {
               <Route path="/user-booking" element={<UserBooking/>} />
 
                
-      {/* <Route path="/create-turf"  element={isManager ? <CreateTurf /> : <Navigate to="/" replace />}  */}
-       {/* Always include the route, but protect access */}
+   
               <Route
                 path="/create-turf"
                 element={isManager ? <CreateTurf /> : <Navigate to="/" replace />}
+              />
+
+              <Route
+              path="/get-booking"
+              element = {isManager ? <GetBookings/> : <Navigate to="/" replace />}
+
               />
              
               
