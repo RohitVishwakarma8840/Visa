@@ -5,7 +5,10 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; 
 import { useNavigate } from "react-router-dom";
 
-const Cards = ({ title, name, description, image, location, availableSlots, rating, reviews,price,  user,turfId }) => {
+const Cards = ({ title, name, description, image, location, availableSlots, rating, reviews,price,  user,turfId,
+  currentPage,handleChange,setCurrentPage,itemPerPage
+
+ }) => {
   // console.log('first', first)
  const navigate  = useNavigate();
 
@@ -16,6 +19,8 @@ const Cards = ({ title, name, description, image, location, availableSlots, rati
   navigate(`/booking/${turfId}`);
 
  }
+
+//  console.log(availableSlots, "Getting in the Card Component ");
 
 
   return (
@@ -79,9 +84,16 @@ const Cards = ({ title, name, description, image, location, availableSlots, rati
               {/* {availableSlots[0].time}  */}
               {/* {availableSlots[0].time} */}
                {/* {JSON.stringify(availableSlots.date)} */}
-               {availableSlots?.length > 0 ? (
-  <Typography>{availableSlots[0].time}</Typography>
-): 'No slots'}
+             {availableSlots?.length > 0 ? (
+  availableSlots.map((slot, index) => (
+    <Typography key={index}>
+      {`${slot.startTime} - ${slot.endTime}`}
+    </Typography>
+  ))
+) : (
+  'No slots'
+)}
+
             </Typography>
           </Typography>
         </Box>

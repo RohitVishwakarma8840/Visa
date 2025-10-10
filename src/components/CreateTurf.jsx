@@ -10,6 +10,8 @@ import {
   Switch,
   FormControlLabel,
   IconButton,
+  Alert,
+ // For image/slots error text
 } from "@mui/material";
 import { Upload, Plus, Trash2, Clock } from "lucide-react";
 import { useDispatch } from "react-redux";
@@ -17,12 +19,10 @@ import { useSelector } from "react-redux";
 import { createTurf } from "../store/slices/turfSlice";
 
 const CreateTurf = () => {
-
-
-const dispatch = useDispatch();
-
-const turf = useSelector((state)=>state.turf);
-
+  // const [errors, setErrors] = useState({});
+  // const [generalError, setGeneralError] = useState('');
+  const dispatch = useDispatch();
+  const {turf,error} = useSelector((state) => state.turf);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,6 +38,10 @@ const turf = useSelector((state)=>state.turf);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear field-specific error on change
+    // if (errors[field]) {
+    //   setErrors((prev) => ({ ...prev, [field]: '' }));
+    // }
   };
 
   const handleImageChange = (e) => {
@@ -45,6 +49,10 @@ const turf = useSelector((state)=>state.turf);
     if (file) {
       setFormData((prev) => ({ ...prev, image: file }));
       setImagePreview(URL.createObjectURL(file));
+      // Clear image error
+      // if (errors.image) {
+      //   setErrors((prev) => ({ ...prev, image: '' }));
+      // }
     }
   };
 
@@ -52,6 +60,10 @@ const turf = useSelector((state)=>state.turf);
     const updatedSlots = [...formData.availableSlots];
     updatedSlots[index].time = value;
     setFormData((prev) => ({ ...prev, availableSlots: updatedSlots }));
+    // Clear slots error if present
+    // if (errors.availableSlots) {
+    //   setErrors((prev) => ({ ...prev, availableSlots: '' }));
+    // }
   };
 
   const addSlot = () => {
@@ -61,36 +73,35 @@ const turf = useSelector((state)=>state.turf);
     }));
   };
 
-  // we are filtering the slots which are not equal to the index 
   const removeSlot = (index) => {
     const updatedSlots = formData.availableSlots.filter((_, i) => i !== index);
     setFormData((prev) => ({ ...prev, availableSlots: updatedSlots }));
   };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    // Client-side image check (clears on upload)
+    if (!formData.image) {
+      // setErrors({ image: "Please upload a turf image!" });
+      // setGeneralError('');
+      return;
+    }
 
-  if (!formData.image) {
-    alert("Please upload a turf image!");
-    return;
-  }
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("description", formData.description);
+    data.append("location", formData.location);
+    data.append("price", Number(formData.price));
+    data.append("available", String(formData.available));
+    data.append("image", formData.image);
+    data.append("availableSlots", JSON.stringify(formData.availableSlots));
 
-  const data = new FormData();
-  data.append("name", formData.name);
-  data.append("description", formData.description);
-  data.append("location", formData.location);
-  data.append("price", Number(formData.price));
-  data.append("available", String(formData.available));
-  data.append("image", formData.image); // only once
-  data.append("availableSlots", JSON.stringify(formData.availableSlots)); 
-
-  dispatch(createTurf(data))
-    .unwrap()
-    .then((res) => {
+    try {
+      const res = await dispatch(createTurf(data)).unwrap();
       console.log("Turf created:", res);
-      alert("Turf created successfully!");
+
+      // Clear form and errors on success
       setFormData({
         name: "",
         description: "",
@@ -101,13 +112,30 @@ const handleSubmit = async (e) => {
         availableSlots: [{ time: "" }],
       });
       setImagePreview(null);
-    })
-    .catch((err) => {
-      console.error("Error creating turf:", err);
-      alert(err || "Error creating turf. Please try again.");
-    });
-};
+      // setErrors({});
+      // setGeneralError('');
+      // alert("Turf created successfully!");
+    } 
+   catch (err) {
+  console.error("Error creating turf:", err);
 
+  // When using unwrap(), err contains backend response data
+  // if (err && err.errors) {
+  //   setErrors(err.errors); // { name: "...", description: "...", etc. }
+  //   setGeneralError('');
+  // } 
+  // else if (err && err.message) {
+  //   // If backend sent { message: "...something..." }
+  //   setGeneralError(err.message);
+  //   alert(err.message)
+  // } 
+  // else {
+  //   // Fallback for unexpected cases
+  //   setGeneralError('Something went wrong. Please try again.');
+  // }
+}
+
+  };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -117,7 +145,7 @@ const handleSubmit = async (e) => {
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit} noValidate>
-          {/* Turf Name */}
+          {/* Turf Name - Error shows under this field if backend sends errors.name */}
           <TextField
             label="Turf Name"
             value={formData.name}
@@ -125,9 +153,16 @@ const handleSubmit = async (e) => {
             required
             fullWidth
             margin="normal"
+            error={!!error?.name}
+            helperText={error?.name}
           />
 
-          {/* Image Upload */}
+          {/* {  <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+    {error?.name}
+  </Typography>
+} */}
+
+          {/* Image Upload - Error shows below button if errors.image */}
           <Box sx={{ my: 2 }}>
             <Button
               variant="outlined"
@@ -138,6 +173,11 @@ const handleSubmit = async (e) => {
               Upload Turf Image
               <input type="file" hidden accept="image/*" onChange={handleImageChange} />
             </Button>
+            {/* {errors.image && (
+              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                {errors.image}
+              </Typography>
+            )} */}
             {imagePreview && (
               <Box sx={{ mt: 2, textAlign: "center" }}>
                 <img
@@ -149,7 +189,7 @@ const handleSubmit = async (e) => {
             )}
           </Box>
 
-          {/* Description */}
+          {/* Description - Error under this field if errors.description */}
           <TextField
             label="Description"
             value={formData.description}
@@ -159,9 +199,11 @@ const handleSubmit = async (e) => {
             multiline
             rows={4}
             margin="normal"
+            error={!!error?.description}
+            helperText={error?.description}
           />
 
-          {/* Location & Price */}
+          {/* Location & Price - Errors under each if errors.location or errors.price */}
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <TextField
@@ -171,6 +213,8 @@ const handleSubmit = async (e) => {
                 required
                 fullWidth
                 margin="normal"
+                error={!!error?.location}
+                helperText={error?.location}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -182,9 +226,18 @@ const handleSubmit = async (e) => {
                 required
                 fullWidth
                 margin="normal"
+                error={!!error?.price}
+                helperText={error?.price}
               />
             </Grid>
           </Grid>
+
+          {/* General Error Alert - For non-field errors like server issues */}
+          {/* {generalError && (
+            <Alert severity="error" sx={{ mt: 2 }} onClose={() => setGeneralError('')}>
+              {generalError}
+            </Alert>
+          )} */}
 
           {/* Availability */}
           <FormControlLabel
@@ -198,7 +251,7 @@ const handleSubmit = async (e) => {
             sx={{ mt: 2 }}
           />
 
-          {/* Available Slots */}
+          {/* Available Slots - Error under slots if errors.availableSlots */}
           <Box sx={{ mt: 3 }}>
             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Clock size={20} /> Available Time Slots
@@ -212,6 +265,8 @@ const handleSubmit = async (e) => {
                   onChange={(e) => handleSlotChange(index, e.target.value)}
                   required
                   fullWidth
+                  error={!!error?.availableSlots}
+                  helperText={error?.availableSlots} // Shows under each slot field
                 />
                 {formData.availableSlots.length > 1 && (
                   <IconButton color="error" onClick={() => removeSlot(index)}>
@@ -220,6 +275,13 @@ const handleSubmit = async (e) => {
                 )}
               </Box>
             ))}
+
+            {/* Extra display if no slots selected */}
+            {/* {errors.availableSlots && !formData.availableSlots.some(slot => slot.time) && (
+              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                {errors.availableSlots}
+              </Typography>
+            )} */}
 
             <Button
               variant="outlined"

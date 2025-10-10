@@ -40,9 +40,12 @@ export const createTurf = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.msg || "Failed to create turf"
-      );
+      // return rejectWithValue(
+      //   error.response?.data?.msg || "Failed to create turf"
+      // );
+      // console.log(error)
+       console.log(error.response?.data);
+  return rejectWithValue(error.response?.data?.errors || "Failed to create turf");
     }
   }
 );

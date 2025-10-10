@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Pagination } from '@mui/material';
 import Cards from '../components/Cards';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getAllTurfs } from '../store/slices/turfSlice';
+import PaginationComponent from '../components/pagination/PaginationComponent';
 
 // const data = [
 //   {
@@ -93,23 +94,51 @@ const Data = () => {
   // console.log(state.turf.turfs);
   const data = turfs.turfs || [];
 
+
+  useEffect(() => {
+  if (data.length > 0 && currentPage > Math.ceil(data.length / itemPerPage)) {
+    setCurrentPage(1); // or totalPages
+  }
+}, [data.length]);
+
+
+  // console.log(data,"data in the data component i ma ");
+
   // console.log(turfs, 'Getting on the data com');
   useEffect(() => {
     dispatch(getAllTurfs());
   }, [dispatch]);
+
+ const [currentPage,setCurrentPage] = useState(1);
+ const itemPerPage = 5;
+
+ const totalPages = Math.ceil(data.length/itemPerPage);
+ console.log('totalPages', totalPages)
+
+ const Disdata = data.slice(
+  (currentPage-1)*itemPerPage,
+  currentPage*itemPerPage
+ );
+
+ console.log(Disdata,"here i am ")
+
+
+  const handleChange = (event,value)=>{
+      setCurrentPage(value);
+      alert('it worked ');
+  }
+
+
+
+
   return (
-    <Box
+      <Box
       sx={{
-        bgcolor: '#F6F6F',
-        bgcolor: '#F2F2F2',
-        // bgcolor:'#000',
+        bgcolor: '#F6F6F6',
+        minHeight: '100vh',
         display: 'flex',
-        gap: 3,
-        justifyContent: 'center',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
         p: 4,
-        height: 'auto',
-        overflow: 'hidden',
         marginTop: {
           sm: '0',
           md: '20px',
@@ -117,19 +146,34 @@ const Data = () => {
         },
       }}
     >
-      {data.map((academy, i) => (
-        // <Cards key={i} {...academy} />
-        <Cards 
-        key={i} 
-        //  key={academy._id}
-          {...academy}
-          turfId={academy._id}  // Pass turfId as a prop
-        
-        />
-        
-      ))}
+      {/* Cards Container */}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 3,
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          flex: 1,
+          alignContent: 'flex-start', // Keep cards at top
+        }}
+      >
+        {Disdata.map((academy) => (
+          <Cards
+            key={academy._id}
+            {...academy}
+            turfId={academy._id}
+          />
+        ))}
+      </Box>
 
-      {/* <h1>Hello</h1> */}
+      {/* Pagination - Always at bottom */}
+      <PaginationComponent
+        currentPage={currentPage}
+        itemPerPage={itemPerPage}
+        handleChange={handleChange}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </Box>
   );
 };
