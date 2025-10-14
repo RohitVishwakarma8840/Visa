@@ -188,7 +188,7 @@ function GetBookings() {
       }}
     >
       <Container maxWidth="xl">
-        <Box sx={{ mb: 6, textAlign: 'center' }}>
+        <Box sx={{ mb: 3, textAlign: 'center' }}>
           <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
             All Turf Bookings
           </Typography>

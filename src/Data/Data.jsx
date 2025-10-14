@@ -45,46 +45,9 @@ import PaginationComponent from '../components/pagination/PaginationComponent';
 //     reviews: 10,
 //     price: 350,
 //     user: "Vikram",
-//   },
-//   {
-//     id: 4,
-//     image: "/turf.png",
-//     title: "X Academy",
-//     description:
-//       "Where dreams meet excellence in sports education and training.",
-//     location: "Sacramento, CA",
-//     availability: "Today",
-//     rating: 2.5,
-//     reviews: 10,
-//     price: 350,
-//     user: "Vikram",
-//   },
-//   {
-//     id: 5,
-//     image: "/island.jpg",
-//     title: "X Academy",
-//     description:
-//       "Where dreams meet excellence in sports education and training.",
-//     location: "Sacramento, CA",
-//     availability: "Today",
-//     rating: 2.5,
-//     reviews: 10,
-//     price: 350,
-//     user: "Vikram",
-//   },
-//   {
-//     id: 6,
-//     image: "/rubber.jpg",
-//     title: "X Academy",
-//     description:
-//       "Where dreams meet excellence in sports education and training.",
-//     location: "Sacramento, CA",
-//     availability: "Today",
-//     rating: 2.5,
-//     reviews: 10,
-//     price: 350,
-//     user: "Vikram",
-//   },
+//   }
+
+
 
 // ];
 
@@ -125,7 +88,7 @@ const Data = () => {
 
   const handleChange = (event,value)=>{
       setCurrentPage(value);
-      alert('it worked ');
+      // alert('it worked ');
   }
 
 
