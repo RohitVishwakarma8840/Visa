@@ -36,7 +36,7 @@ The app demonstrates how to build modern, responsive user interfaces using React
    ```sh
    npm run dev
    ```
-5. Open your browser and go to `http://localhost:5173` (or the port shown in your terminal).
+<!-- 5. Open your browser and go to `http://localhost:5173` (or the port shown in your terminal). -->
 
 ## Purpose
 This app is for personal practice and learning. It is not intended for production use, but as a playground to explore and understand how to style React components using MUI and custom CSS.

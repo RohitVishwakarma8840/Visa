@@ -58,6 +58,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
               <Route path="/signup" element={<SignUp/>} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
+
             </>
           )}
         </Routes>
