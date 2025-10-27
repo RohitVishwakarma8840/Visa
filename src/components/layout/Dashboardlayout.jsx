@@ -32,29 +32,11 @@ const DashboardLayout = ({ children }) => {
     // dispatch(setSearch(""));       // reset search in Redux too, if needed 
   }, [location.pathname]);
 
-    // const { fileId } = useParams();
-  
-
-  // Dispatch when debounced value changes
-//   useEffect(() => {
-//     if (location.pathname === "/users") {
-//       dispatch(fetchUsers({ page: page, size: rowsPerPage, search: search }));
-//     }else if(location.pathname === "/beneficiaries"){
-//       dispatch(fetchBeneficiaries({page : 1, size : 10, search : search}))
-//     }else if(location.pathname === "/transactions"){
-//       dispatch(fetchTransactionFiles({page : page, size : rowsPerPage, search : search}))
-//     }
-//     else if(location.pathname === "/reverse"){
-//       // dispatch(fetchTransactionFiles({page : page, size : rowsPerPage, search : search}))
-//     }else if(location.pathname.includes("/transactions/file")){
-//             dispatch(fetchTransactionFileItems({ fileId, page: 1, size: 10 ,search:search}));
-//     }
-    
-   
-//   }, [search, location.pathname]);
 
   return (
-    <Box minHeight="100vh" display="flex" flexDirection={{ xs: 'column', md: 'row' }} bgcolor="#F8F7FA">
+    <Box minHeight="100vh" display="flex" flexDirection={{ xs: 'column', md: 'row' }} bgcolor="#F8F7FA"
+    
+    >
       {!isMobile 
       
       &&
@@ -67,7 +49,7 @@ const DashboardLayout = ({ children }) => {
        
       </Box> */}
       
-        <Box flex={1} p={{ xs: 2, md: 0 }}>
+        <Box flex={1} p={{ xs: 2, md: 0 }} sx={{ overflowX: 'clip' }}>
           {children}
         </Box>
       </Box>

@@ -219,11 +219,12 @@ function UserBooking() {
               component="h1"
               sx={{
                 fontWeight: 700,
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #070707ff 0%, #f5576c 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                mb: 2
+                mb: 2,
+                color:'#080000ff'
               }}
             >
               My Bookings
@@ -318,7 +319,7 @@ function UserBooking() {
                 borderRadius: 4,
                 textAlign: 'center',
                 maxWidth: 400,
-                background: 'rgba(255, 255, 255, 0.95)',
+                background: 'rgba(46, 35, 35, 0.95)',
                 backdropFilter: 'blur(10px)'
               }}
             >

@@ -13,6 +13,7 @@ import CreateTurf from './components/CreateTurf';
 import GetBookings from './components/AdminPages/GetBookings';
 // import { Dashboard } from '@mui/icons-material';
 import DashboardLayout from './components/layout/Dashboardlayout';
+import SignUp from './components/signup/SignUp'
 
 function App() {
   const { isAuthenticated,isManager } = useSelector((state) => state.auth);
@@ -56,6 +57,7 @@ function App() {
             <>
               <Route path="/login" element={<Login />} />
               {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
+              <Route path="/signup" element={<SignUp/>} />
             </>
           )}
         </Routes>

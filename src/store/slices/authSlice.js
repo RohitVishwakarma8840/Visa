@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axiosInstance';
+import { SignpostOutlined } from '@mui/icons-material';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -42,6 +43,23 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
+export const signup = createAsyncThunk(
+  'auth/signup',
+   async (credentials, { rejectWithValue }) => {
+    try{
+
+      const response  = await axiosInstance.post('auth/register', credentials);
+       return response;
+
+    }
+    catch(error){
+      console.log(error);
+      return rejectWithValue(err.response?.data || 'SignUp Failed')
+    }
+   }
+
+)
 
 
 const getInitialUser = () => {
@@ -100,6 +118,19 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.isManager  = false;
       })
+      .addCase(signup.pending,(state)=>{
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(signup.fulfilled,(state,action)=>{
+        state.loading = false;
+        const payload = action.payload;
+      })
+       .addCase(signup.rejected, (state) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       .addCase(logout.pending, (state) => {
         state.loading = true;
         state.error = null;

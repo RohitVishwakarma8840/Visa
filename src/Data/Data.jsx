@@ -76,7 +76,7 @@ const Data = () => {
  const itemPerPage = 5;
 
  const totalPages = Math.ceil(data.length/itemPerPage);
- console.log('totalPages', totalPages)
+//  console.log('totalPages', totalPages)
 
  const Disdata = data.slice(
   (currentPage-1)*itemPerPage,

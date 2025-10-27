@@ -10,17 +10,17 @@ import {
   Alert,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '../../store/slices/authSlice';
+import { login, logout, signup } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //   const { loading, error } = useSelector((state) => state.auth);
 
-  const {loading,error } = useSelector((state)=>state.auth);
-  console.log(loading,error,"auth state");
+//   const {loading,error } = useSelector((state)=>state.auth);
+//   console.log(loading,error,"auth state");
 
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: '', password: '', name:'' });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,9 +29,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log('login submitted ');
-   const resultAction = await dispatch(login(form));
+  //  const resultAction = await dispatch(login(form));
+   const resultAction = await dispatch(signup(form))
    if(resultAction){
-    navigate('/');
+    navigate('/login');
    }
 
   };
@@ -177,7 +178,7 @@ const Login = () => {
               marginTop: { xs: 2, md: 0 },
             }}
           >
-            Log in to Continue
+            Sign Up to Continue
           </Typography>
 
           <Typography
@@ -188,7 +189,7 @@ const Login = () => {
               color: { xs: '#666', md: 'inherit' },
             }}
           >
-            Enter your details to Login
+            Enter your details to Sign Up
           </Typography>
         </Box>
 
@@ -202,7 +203,10 @@ const Login = () => {
             width: '100%',
           }}
         >
-          {/* Email Address Field */}
+
+
+
+          {/* Sign Up Address Field */}
           <Box
             sx={{
               width: '100%',
@@ -211,6 +215,28 @@ const Login = () => {
               gap: '6px',
             }}
           >
+
+           <Typography
+               sx={{
+                fontSize: { xs: '13px', md: '15px' },
+                color: 'black',
+              }}
+           >
+          Enter Name
+           </Typography>
+           <TextField
+            name="name"
+              type="text"
+              placeholder="Enter your Name here"
+              value={form.name}
+              onChange={handleChange}
+              fullWidth
+              size="small"
+
+           />
+
+         
+
             <Typography
               sx={{
                 fontSize: { xs: '13px', md: '15px' },
@@ -282,6 +308,7 @@ const Login = () => {
             />
           </Box>
 
+          {/* {error && <Alert severity="error">{error}</Alert>} */}
 
           <Button
             type="submit"
@@ -307,34 +334,12 @@ const Login = () => {
              
              
              } */}
-            Log In
+            Sign Up
           </Button>
 
-
-<Box sx={{ display: 'flex', alignItems: 'center',flexWrap:'wrap' , mt:{
-  md:1, xs:0, lg:1
-} }}>
-  <Typography sx={{ display: 'inline',
-     ml:{
-      xs:0, sm:'3rem' , md:'6rem', lg:'6rem', xl:'8rem'
-     }
-     }}>Not Registered&nbsp;</Typography>
-  <Typography
-    sx={{
-      display: 'inline',
-      color: 'blue',
-      cursor: 'pointer',
-      textDecoration: 'underline',
-      // ml:'0.2rem'
-    }}
-    onClick={() => navigate('/signup')}
-  >
-    Go to Sign Up
-  </Typography>
-</Box>
-
-
-
+          {/* <Typography sx={styles.forgetPassword}>
+            Forgot Password
+          </Typography> */}
         </form>
       </Box>
     </Box>
